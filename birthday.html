@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>生日惊喜 ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to top, #ff9a9e, #fad0c4);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      height: 100vh;
+      font-family: "微软雅黑", sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* 信封 */
+    #envelope {
+      width: 70vw;
+      max-width: 280px;
+      height: 120px;
+      background: #fff;
+      position: relative;
+      cursor: pointer;
+      margin-top: 80px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    #envelope:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 35vw solid transparent;
+      border-right: 35vw solid transparent;
+      border-top: 60px solid #ff7b7b;
+      max-width: 140px;
+    }
+
+    /* 信纸 */
+    #letter {
+      display: none;
+      width: 80vw;
+      max-width: 320px;
+      min-height: 160px;
+      background: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 1.2em;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      animation: fadeIn 2s forwards;
+      z-index: 10;
+      border-radius: 10px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%,-60%); }
+      to { opacity: 1; transform: translate(-50%,-50%); }
+    }
+
+    /* 蛋糕和蜡烛 */
+    #cake {
+      display: none;
+      text-align: center;
+      margin-top: 50px;
+      font-size: 3em;
+      position: relative;
+    }
+    #candles {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: -15px;
+    }
+    .row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: nowrap;
+    }
+    .candle {
+      font-size: 1.3em;
+      cursor: pointer;
+      margin: 0 4px;
+      position: relative;
+      top: -18px;
+    }
+
+    /* 生日祝福 */
+    #wish {
+      display: none;
+      margin-top: 20px;
+      font-size: 2em;
+      color: #fff;
+      text-align: center;
+      text-shadow: 0 0 10px #ff4081;
+      animation: pop 1s infinite alternate;
+    }
+    @keyframes pop {
+      from { transform: scale(1); }
+      to { transform: scale(1.1); }
+    }
+
+    /* 补充祝福语 */
+    #extra {
+      display: none;
+      margin-top: 10px;
+      font-size: 1.5em;
+      color: #fff;
+      text-align: center;
+      text-shadow: 0 0 8px #ff80ab;
+      animation: fade 2s infinite alternate;
+    }
+    @keyframes fade {
+      from { opacity: 0.6; }
+      to { opacity: 1; }
+    }
+
+    /* 永远爱你 */
+    #love {
+      display: none;
+      margin-top: 8px;
+      font-size: 1.6em;
+      color: #fff;
+      text-align: center;
+      text-shadow: 0 0 8px #ff1744;
+      animation: heartbeat 1.5s infinite;
+    }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    /* 署名 */
+    #signature {
+      display: none;
+      position: absolute;
+      bottom: 10px;
+      right: 15px;
+      font-size: 1em;
+      color: #fff;
+      text-shadow: 0 0 5px #ff80ab;
+      opacity: 0.8;
+      animation: fade 3s infinite alternate;
+    }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div id="envelope"></div>
+  <div id="letter">亲爱的，点燃蜡烛许个愿吧 🎂</div>
+  
+  <div id="cake">
+    <div id="candles">
+      <div class="row" id="row1"></div>
+      <div class="row" id="row2"></div>
+    </div>
+    🎂
+  </div>
+
+  <div id="wish">生日快乐，何诗淇 ❤️</div>
+  <div id="extra">祝你天天开心，健健康康 ✨</div>
+  <div id="love">我永远爱你 ❤️</div>
+  <div id="signature">by Bing</div>
+
+  <script>
+    const envelope = document.getElementById("envelope");
+    const letter = document.getElementById("letter");
+    const cake = document.getElementById("cake");
+    const row1 = document.getElementById("row1");
+    const row2 = document.getElementById("row2");
+    const wish = document.getElementById("wish");
+    const extra = document.getElementById("extra");
+    const love = document.getElementById("love");
+    const signature = document.getElementById("signature");
+
+    const totalCandles = 15;
+
+    // 上排8根，下排7根
+    for (let i = 0; i < totalCandles; i++) {
+      const span = document.createElement("span");
+      span.className = "candle";
+      span.textContent = "🕯️";
+      if (i < 8) {
+        row1.appendChild(span);
+      } else {
+        row2.appendChild(span);
+      }
+    }
+    const candles = document.querySelectorAll(".candle");
+
+    envelope.onclick = () => {
+      envelope.style.display = "none";
+      letter.style.display = "block";
+      setTimeout(() => {
+        letter.style.display = "none";
+        cake.style.display = "block";
+      }, 3000);
+    };
+
+    candles.forEach(candle => {
+      candle.onclick = () => {
+        candle.textContent = "✨";
+        candle.classList.add("hidden");
+        if ([...candles].every(c => c.classList.contains("hidden"))) {
+          wish.style.display = "block";
+          setTimeout(() => {
+            extra.style.display = "block";
+            setTimeout(() => {
+              love.style.display = "block";
+              setTimeout(() => {
+                signature.style.display = "block";
+              }, 1200);
+            }, 1200);
+          }, 1200);
+        }
+      };
+    });
+  </script>
+</body>
+</html>
